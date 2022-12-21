@@ -17,33 +17,10 @@ function gen-pass(){ echo $(base64 < /dev/urandom | tr -d 'O0Il1+/' | head -c 16
 # Functions #
 # --------- #
 
-# function rvim(){
-#   # Lunarvim for rust. since I've been having... issues
-#   local DEFAULT_RUNTIME_DIR
-#   local DEFAULT_CONFIG_DIR
-#   local DEFAULT_CACHE_DIR
-
-#   DEFAULT_RUNTIME_DIR="$LUNARVIM_RUNTIME_DIR"
-#   DEFAULT_CONFIG_DIR="$LUNARVIM_CONFIG_DIR"
-#   DEFAULT_CACHE_DIR="$LUNARVIM_CACHE_DIR"
-
-#   export LUNARVIM_RUNTIME_DIR="$HOME/.local/share/rustvim"
-#   export LUNARVIM_CONFIG_DIR="$HOME/.config/rvim"
-#   export LUNARVIM_CACHE_DIR="$HOME/.cache/rvim"
-
-#   test -e "$LUNARVIM_RUNTIME_DIR" || mkdir -p "$LUNARVIM_RUNTIME_DIR"
-#   test -e "$LUNARVIM_CONFIG_DIR" || mkdir -p "$LUNARVIM_CONFIG_DIR"
-#   test -e "$LUNARVIM_CACHE_DIR" || mkdir -p "$LUNARVIM_CACHE_DIR"
-
-#   echo $LUNARVIM_CONFIG_DIR
-
-#   nvim -u "$LUNARVIM_RUNTIME_DIR/lvim/init.lua" $@
-
-#   test -z "$DEFAULT_RUNTIME_DIR" && unset "LUNARVIM_RUNTIME_DIR" || export LUNARVIM_RUNTIME_DIR="$DEFAULT_RUNTIME_DIR"
-#   test -z "$DEFAULT_CONFIG_DIR" && unset "LUNARVIM_CONFIG_DIR" || export LUNARVIM_CONFIG_DIR="$DEFAULT_CONFIG_DIR"
-#   test -z "$DEFAULT_CACHE_DIR" && unset "LUNARVIM_CACHE_DIR" || export LUNARVIM_CACHE_DIR="$DEFAULT_CACHE_DIR"
-
-# }
+# Just outputs all your pkgs that have files missing
+function missing_files(){
+  pacman -Qk 2>&1 | grep -E ', [1-9][0-9]* missing files'
+}
 
 function contains() {
     string="$1"
@@ -148,7 +125,7 @@ function reload(){
   # Quickly reload current shell config
   local old_cwd
   local rc_file
-  old_cwd=$(pwd)
+  old_cwd=$(pwd) || $HOME
   rc_file="$(_determine_rc_file)"
   source $rc_file
   cd "$old_cwd"
