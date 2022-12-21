@@ -54,7 +54,7 @@ function zle-line-init zle-keymap-select {
   __set_all_indicators                                            # Update global indicator variables
 
   PROMPT="$__VENV_INDICATOR $__HPWD $__VI_INDICATOR \$ "          # Left prompt
-  RPROMPT="$EXIT_CODE"                                            # Right prompt
+  RPROMPT="$__EXIT_CODE"                                            # Right prompt
   zle reset-prompt
 }
 
