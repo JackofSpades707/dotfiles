@@ -20,9 +20,7 @@ lvim.builtin.treesitter.rainbow.enable = true
 -- Packer Config --
 -------------------
 
-local packer = require('packer')
-
-packer.max_jobs = 30
+-- local packer = require('packer')
 
 -- packer.init({
 --   max_jobs = 20,
@@ -186,12 +184,12 @@ lvim.plugins = {
       local slow = '450'
       local medium = '150'
       local fast = '50'
-      mappings['<PageUp>'] = {'scroll', {'-vim.wo.scroll', 'true', fast, [['sine']]}}
-      mappings['<PageDown>'] = {'scroll', {'vim.wo.scroll', 'true', fast, [['sine']]}}
-      mappings['<C-PageUp>'] = {'scroll', {'-vim.wo.scroll', 'true', medium, [['sine']]}}
-      mappings['<C-PageDown>'] = {'scroll', {'vim.wo.scroll', 'true', medium, [['sine']]}}
-      mappings['<C-Up>'] = {'scroll', {'-vim.wo.scroll', 'true', slow, [['sine']]}}
-      mappings['<C-Down>'] = {'scroll', {'vim.wo.scroll', 'true', slow, [['sine']]}}
+      mappings['<PageUp>'] = { 'scroll', { '-vim.wo.scroll', 'true', fast, [['sine']] } }
+      mappings['<PageDown>'] = { 'scroll', { 'vim.wo.scroll', 'true', fast, [['sine']] } }
+      mappings['<C-PageUp>'] = { 'scroll', { '-vim.wo.scroll', 'true', medium, [['sine']] } }
+      mappings['<C-PageDown>'] = { 'scroll', { 'vim.wo.scroll', 'true', medium, [['sine']] } }
+      mappings['<C-Up>'] = { 'scroll', { '-vim.wo.scroll', 'true', slow, [['sine']] } }
+      mappings['<C-Down>'] = { 'scroll', { 'vim.wo.scroll', 'true', slow, [['sine']] } }
 
       require('neoscroll').setup({
         -- All these keys will be mapped to their corresponding default scrolling animation
@@ -211,5 +209,25 @@ lvim.plugins = {
     end
   },
 
+  {
+    "metakirby5/codi.vim",
+    cmd = "Codi",
+  },
+
+  -- Github CoPilot. Lets see how nice this really is.
+  { "zbirenbaum/copilot.lua",
+    event = { "VimEnter" },
+    config = function()
+      vim.defer_fn(function()
+        require("copilot").setup {
+          plugin_manager_path = get_runtime_dir() .. "/site/pack/packer",
+        }
+      end, 100)
+    end,
+  },
+
+  { "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua", "nvim-cmp" },
+  },
 
 }

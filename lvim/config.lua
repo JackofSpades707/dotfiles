@@ -11,3 +11,7 @@ require("user.keymaps")
 require("user.autocmds")
 require("user.commands")
 require("user.langs.rust") -- Just do it.
+
+-- Copilot test drive.
+lvim.builtin.cmp.formatting.source_names["copilot"] = "(Copilot)"
+table.insert(lvim.builtin.cmp.sources, 1, { name = "copilot" })
