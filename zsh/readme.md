@@ -1,4 +1,5 @@
 # ZSH
+Just my custom zsh dotfiles :)
 
 # Preview
 ![Preview Image of Prompt](preview-prompt.png?raw=true 'Preview')
